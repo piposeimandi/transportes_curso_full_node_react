@@ -12,6 +12,7 @@
         <tr>
           <th>ID</th>
           <th>Título</th>
+          <th>Imagen</th>
           <th>Fecha de creación</th>
           <th>Acciones</th>
         </tr>
@@ -21,6 +22,13 @@
           <tr>
             <td>{{id}}</td>
             <td>{{titulo}}</td>
+            <td>
+              {{#if imagen}}
+                <img src="/images/{{imagen}}" alt="{{nombre_imagen}}" class="img-thumbnail" style="width: 96px; height: 64px; object-fit: cover;">
+              {{else}}
+                <span class="d-inline-flex align-items-center justify-content-center border rounded bg-body-secondary text-muted small" style="width: 96px; height: 64px;">Sin imagen</span>
+              {{/if}}
+            </td>
             <td>{{fecha_insert}}</td>
             <td>
               <a href="/admin/novedades/modificar/{{id}}" class="btn btn-sm btn-primary">

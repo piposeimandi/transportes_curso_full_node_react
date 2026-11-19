@@ -1,36 +1,72 @@
--- --------------------------------------------------------
--- Host:                         127.0.0.1
--- Versión del servidor:         8.0.30 - MySQL Community Server - GPL
--- SO del servidor:              Win64
--- HeidiSQL Versión:             12.21.0.7344
--- --------------------------------------------------------
+-- phpMyAdmin SQL Dump
+-- version 5.2.3
+-- https://www.phpmyadmin.net/
+--
+-- Servidor: mysql:3306
+-- Tiempo de generación: 19-11-2026 a las 22:39:14
+-- Versión del servidor: 8.4.13
+-- Versión de PHP: 8.3.36
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET NAMES utf8 */;
-/*!50503 SET NAMES utf8mb4 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
 
--- Volcando estructura para tabla transportes.novedades
-CREATE TABLE IF NOT EXISTS `novedades` (
-  `id` int NOT NULL AUTO_INCREMENT,
+--
+-- Base de datos: `transportes`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `novedades`
+--
+
+CREATE TABLE `novedades` (
+  `id` int NOT NULL,
   `titulo` varchar(150) NOT NULL,
   `subtitulo` text NOT NULL,
   `cuerpo` text NOT NULL,
+  `nombre_imagen` varchar(150) DEFAULT NULL,
+  `imagen` varchar(150) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
   `fecha_insert` datetime NOT NULL,
   `fecha_update` datetime DEFAULT NULL,
-  `fecha_delete` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `fecha_delete` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla transportes.novedades: ~0 rows (aproximadamente)
--- DELETE FROM `novedades`;
+--
+-- Volcado de datos para la tabla `novedades`
+--
 
-/*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
-/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
-/*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
+INSERT INTO `novedades` (`id`, `titulo`, `subtitulo`, `cuerpo`, `nombre_imagen`, `imagen`, `fecha_insert`, `fecha_update`, `fecha_delete`) VALUES
+(1, 'hola', 'hola', 'hola hola', NULL, NULL, '2026-11-19 22:02:37', '2026-11-19 22:02:41', NULL);
+
+--
+-- Índices para tablas volcadas
+--
+
+--
+-- Indices de la tabla `novedades`
+--
+ALTER TABLE `novedades`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `novedades`
+--
+ALTER TABLE `novedades`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+COMMIT;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40111 SET SQL_NOTES=IFNULL(@OLD_SQL_NOTES, 1) */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

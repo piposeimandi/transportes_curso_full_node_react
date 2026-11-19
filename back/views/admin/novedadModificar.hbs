@@ -1,7 +1,8 @@
 <div class="container py-5">
         <h1 class="h3 mb-4">Modificar novedad</h1>
 
-        <form action="/admin/novedades/modificar" method="POST">
+        <form action="/admin/novedades/modificar" method="POST" enctype="multipart/form-data">
+            {{#if error}}<div class="alert alert-danger" role="alert">{{error}}</div>{{/if}}
             <input type="hidden" name="id" value="{{novedad.id}}">
 
             <div class="mb-3">
@@ -17,6 +18,18 @@
             <div class="mb-3">
                 <label for="cuerpo" class="form-label">Cuerpo</label>
                 <textarea class="form-control" id="cuerpo" name="cuerpo" rows="6" required>{{novedad.cuerpo}}</textarea>
+            </div>
+
+            <div class="mb-3">
+                <label for="imagen" class="form-label">Reemplazar imagen (opcional)</label>
+                <input type="file" class="form-control" id="imagen" name="imagen" accept=".jpg,.jpeg,.png,.gif,.webp">
+                <div class="form-text">Formatos permitidos: JPG, PNG, GIF o WEBP. Máximo 5 MB.</div>
+                {{#if novedad.imagen}}
+                    <div class="mt-2">
+                        <img src="/images/{{novedad.imagen}}" alt="Imagen actual de la novedad" class="img-thumbnail" style="max-width: 240px; max-height: 160px;">
+                        <div class="small text-muted">Archivo: {{novedad.nombre_imagen}}</div>
+                    </div>
+                {{/if}}
             </div>
 
             <button type="submit" class="btn btn-success">Guardar cambios <i class="fas fa-save"></i></button>

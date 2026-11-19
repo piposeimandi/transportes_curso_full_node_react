@@ -25,3 +25,12 @@ npm i md5
 npm i express-session
 
 
+# pra lo de subida de imagenes 
+
+#  cloudinary ?  prefiero subir las imagenes de manera local para lo que es desarrollo . 
+
+npm i express-fileupload
+
+# Las imágenes subidas se guardan localmente en back/storage/images.
+# Express las sirve mediante la ruta /images.
+

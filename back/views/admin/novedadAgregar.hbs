@@ -1,7 +1,9 @@
 <div class="container py-5">
         <h1 class="h3 mb-4">Agregar novedad</h1>
 
-        <form action="/admin/novedades/agregar" method="POST">
+        <form action="/admin/novedades/agregar" method="POST" enctype="multipart/form-data">
+            {{#if error}}<div class="alert alert-danger" role="alert">{{error}}</div>{{/if}}
+
             <div class="mb-3">
                 <label for="titulo" class="form-label">Título</label>
                 <input type="text" class="form-control" id="titulo" name="titulo" maxlength="150" required>
@@ -15,6 +17,12 @@
             <div class="mb-3">
                 <label for="cuerpo" class="form-label">Cuerpo</label>
                 <textarea class="form-control" id="cuerpo" name="cuerpo" rows="6" required></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label for="imagen" class="form-label">Imagen (opcional)</label>
+                <input type="file" class="form-control" id="imagen" name="imagen" accept=".jpg,.jpeg,.png,.gif,.webp">
+                <div class="form-text">Formatos permitidos: JPG, PNG, GIF o WEBP. Máximo 5 MB.</div>
             </div>
 
             <button type="submit" class="btn btn-success">Guardar <i class="fas fa-save"></i></button>

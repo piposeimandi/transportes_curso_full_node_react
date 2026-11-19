@@ -1,7 +1,7 @@
 var pool = require('./db');
 
 async function getNovedades() {
-    var query = `SELECT id, titulo, subtitulo, cuerpo,
+    var query = `SELECT id, titulo, subtitulo, cuerpo, imagen, nombre_imagen,
                     DATE_FORMAT(fecha_insert, '%Y-%m-%d %H:%i') AS fecha_insert,
                     fecha_update, fecha_delete
              FROM novedades
@@ -13,11 +13,17 @@ async function getNovedades() {
 
 async function insertNovedad(obj) {
     const query = `
-    INSERT INTO novedades (titulo, subtitulo, cuerpo, fecha_insert)
-    VALUES (?, ?, ?, NOW())
+    INSERT INTO novedades (titulo, subtitulo, cuerpo, imagen, nombre_imagen, fecha_insert)
+    VALUES (?, ?, ?, ?, ?, NOW())
   `;
 
-    return pool.query(query, [obj.titulo, obj.subtitulo, obj.cuerpo]);
+    return pool.query(query, [
+        obj.titulo,
+        obj.subtitulo,
+        obj.cuerpo,
+        obj.imagen || null,
+        obj.nombre_imagen || null
+    ]);
 }
 
 async function deleteNovedadById(id) {
