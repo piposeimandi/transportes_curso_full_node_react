@@ -1,0 +1,38 @@
+
+services:
+  mysql:
+    image: docker.io/library/mysql:8.4
+    container_name: mysql-dev
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: "sxn9900"
+      MYSQL_ROOT_HOST: "%"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - mysql-network
+    ports:
+      - "127.0.0.1:3306:3306"
+
+  phpmyadmin:
+    image: docker.io/phpmyadmin:latest
+    container_name: phpmyadmin-dev
+    restart: unless-stopped
+    depends_on:
+      - mysql
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: "sxn9900"
+    networks:
+      - mysql-network
+    ports:
+      - "127.0.0.1:8081:80"
+
+volumes:
+  mysql_data:
+
+networks:
+  mysql-network:
+    driver: bridge
