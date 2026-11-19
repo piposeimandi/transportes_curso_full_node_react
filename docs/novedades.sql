@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS `novedades` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- Volcando datos para la tabla transportes.novedades: ~0 rows (aproximadamente)
-DELETE FROM `novedades`;
+-- DELETE FROM `novedades`;
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

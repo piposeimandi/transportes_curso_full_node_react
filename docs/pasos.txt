@@ -24,10 +24,4 @@ npm i dotenv
 npm i md5
 npm i express-session
 
-# crear la tabla usuario en la DB 
-# crear el usuario flavia - 1234 contraseña ecriptada con md5 . 
-
-
-
-
 
