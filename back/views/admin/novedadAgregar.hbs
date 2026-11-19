@@ -1,0 +1,24 @@
+<div class="container py-5">
+        <h1 class="h3 mb-4">Agregar novedad</h1>
+
+        <form action="/admin/novedades/agregar" method="POST">
+            <div class="mb-3">
+                <label for="titulo" class="form-label">Título</label>
+                <input type="text" class="form-control" id="titulo" name="titulo" maxlength="150" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="subtitulo" class="form-label">Subtítulo</label>
+                <textarea class="form-control" id="subtitulo" name="subtitulo" rows="2" required></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label for="cuerpo" class="form-label">Cuerpo</label>
+                <textarea class="form-control" id="cuerpo" name="cuerpo" rows="6" required></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-success">Guardar <i class="fas fa-save"></i></button>
+        </form>
+    </div>
+
+

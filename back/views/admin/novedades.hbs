@@ -1,3 +1,74 @@
 <main class="container py-5">
-  <h1 class="h3">Novedades</h1>
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="h3 mb-0">Listado de novedades</h1>
+    <a href="/admin/novedades/agregar" class="btn btn-success">
+      <span aria-hidden="true">+</span> Crear novedad
+    </a>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Título</th>
+          <th>Fecha de creación</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each novedades}}
+          <tr>
+            <td>{{id}}</td>
+            <td>{{titulo}}</td>
+            <td>{{fecha_insert}}</td>
+            <td>
+              <a href="/admin/novedades/modificar/{{id}}" class="btn btn-sm btn-primary">
+                <i class="fas fa-edit"></i>
+              </a>
+              <button
+                type="button"
+                class="btn btn-sm btn-danger"
+                data-bs-toggle="modal"
+                data-bs-target="#modalEliminarNovedad"
+                data-url="/admin/novedades/eliminar/{{id}}"
+                aria-label="Eliminar novedad"
+              >
+                <i class="fas fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+        {{else}}
+          <tr>
+            <td colspan="5" class="text-center">No hay novedades para mostrar.</td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
 </main>
+
+<div class="modal fade" id="modalEliminarNovedad" tabindex="-1" aria-labelledby="modalEliminarNovedadLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalEliminarNovedadLabel">Confirmar eliminación</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        ¿Estás seguro de que querés eliminar esta novedad?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <a id="confirmarEliminarNovedad" href="#" class="btn btn-danger">Eliminar</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.getElementById('modalEliminarNovedad').addEventListener('show.bs.modal', function (event) {
+    document.getElementById('confirmarEliminarNovedad').href =
+      event.relatedTarget.getAttribute('data-url');
+  });
+</script>
