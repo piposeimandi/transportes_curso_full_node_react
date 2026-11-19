@@ -5,8 +5,8 @@ var md5 = require('md5');
 async function getuserbypasswordandusername(username, password) {
     try {
       
-        var query = 'SELECT * FROM usuarios WHERE usuario = ? AND password = ?';
-        var rows = await pool.pool.query(query, [username, md5(password)]);
+        var query = 'SELECT * FROM usuarios WHERE usuario = ? AND password = ? LIMIT 1';
+        var rows = await pool.query(query, [username, md5(password)]);
         console.log('usuario conectado', username);    
         return rows[0];
 

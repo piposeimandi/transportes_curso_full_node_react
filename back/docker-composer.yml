@@ -1,4 +1,5 @@
 
+#Levanto un servidor de MySQL para poder usarlo desde Docker.
 services:
   mysql:
     image: docker.io/library/mysql:8.4

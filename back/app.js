@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 require('dotenv').config(); 
+var session = require('express-session');
 
 var pool = require('./models/db'); 
 
@@ -25,13 +26,41 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(session({
+  secret: 'Curso2026_pepe',
+  resave: false,
+  saveUninitialized: true
+}));
+
+// guardo en locals si la sesión está iniciada o no, para poder usarlo en las vistas
+app.use(function(req, res, next) {
+  res.locals.sesionIniciada = Boolean(req.session.id_usuario);
+  res.locals.nombre = req.session.nombre || null;
+  next();
+});
+
+secure = async function(req, res, next){
+  try {
+    //console.log(req.session.id_usuario);
+    if (req.session.id_usuario) {
+      next();
+    } else {
+      res.render('admin/login', {
+                layout: 'admin/layout',
+                error: 'No tiene permisos para ingresar a esta sección'
+            }); // le mando asi para poder mandarle un mensaje al login
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 app.use('/', indexRouter);
 app.use('/admin/login', loginRouter);
-app.use('/admin/novedades', novedadesRouter);
-
+app.use('/admin/novedades', secure, novedadesRouter);
 
 /*Select*/
-pool.pool.query('SELECT * FROM usuarios').then(function(resultados) {
+pool.query('SELECT * FROM usuarios').then(function(resultados) {
   console.log(resultados);
 });
 
