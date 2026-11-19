@@ -141,10 +141,15 @@ router.post('/modificar', async (req, res, next) => {
             titulo: req.body.titulo,
             subtitulo: req.body.subtitulo,
             cuerpo: req.body.cuerpo
-        }
+        };
         if (uploadedImage) Object.assign(obj, uploadedImage);
+        else if (req.body.eliminar_imagen === '1') {
+            obj.imagen = null;
+            obj.nombre_imagen = null;
+        }
+
         await novedadesModel.updateNovedadById(obj, req.body.id);
-        if (uploadedImage && novedad.imagen) {
+        if ((uploadedImage || req.body.eliminar_imagen === '1') && novedad.imagen) {
             try {
                 await removeNovedadImage(novedad.imagen);
             } catch (cleanupError) {
