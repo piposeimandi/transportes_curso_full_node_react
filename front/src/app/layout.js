@@ -1,6 +1,7 @@
-import "./styles/globals.css";
+import Script from "next/script";
+import Nav from "@/components/nav";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Nav from "./components/nav";
+import "./styles/globals.css";
 
 
 export const metadata = {
@@ -10,15 +11,21 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="es">
+    <html lang="es" data-bs-theme="dark">
+      <head>
+        <Script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+          strategy="beforeInteractive"
+        />
+      </head>
       <body>
         <Nav />
 
-        <main className="container py-4">
+        <main className="container flex-grow-1 py-4">
           {children}
         </main>
 
-        <footer className="bg-light border-top py-3 text-center">
+        <footer className="bg-dark text-white py-3 text-center mt-auto border-top border-secondary">
           <p className="mb-0">
             &copy; 2024 Transportes X. Todos los derechos reservados.
           </p>

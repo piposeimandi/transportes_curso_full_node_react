@@ -1,40 +1,50 @@
-"use client";
-
 import Link from "next/link";
-import Container from "react-bootstrap/Container";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
 
 export default function Navigation() {
   return (
-    <Navbar expand="lg" bg="dark" data-bs-theme="dark">
-      <Container>
-        <Navbar.Brand as={Link} href="/">
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark border-bottom border-secondary">
+      <div className="container">
+        <Link className="navbar-brand" href="/">
           Transportes X
-        </Navbar.Brand>
+        </Link>
 
-        <Navbar.Toggle aria-controls="main-navigation" />
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#main-navigation"
+          aria-controls="main-navigation"
+          aria-expanded="false"
+          aria-label="Abrir navegación"
+        >
+          <span className="navbar-toggler-icon" />
+        </button>
 
-        <Navbar.Collapse id="main-navigation">
-          <Nav className="ms-auto">
-            <Nav.Link as={Link} href="/">
+        <div className="collapse navbar-collapse" id="main-navigation">
+          <ul className="navbar-nav ms-auto">
+            <li className="nav-item">
+              <Link className="nav-link" href="/">
               Inicio
-            </Nav.Link>
-
-            <Nav.Link as={Link} href="/nosotros">
-              Nosotros
-            </Nav.Link>
-
-            <Nav.Link as={Link} href="/novedades">
-              Novedades
-            </Nav.Link>
-
-            <Nav.Link as={Link} href="/contact">
-              Contacto
-            </Nav.Link>
-          </Nav>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" href="/nosotros">
+                Nosotros
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" href="/novedades">
+                Novedades
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" href="/contacto">
+                Contacto
+              </Link>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
   );
 }
