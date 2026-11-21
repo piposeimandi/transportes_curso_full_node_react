@@ -3,9 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start"
+    "dev": "NODE_USE_SYSTEM_CA=1 next dev",
+    "build": "NODE_USE_SYSTEM_CA=1 next build",
+    "start": "NODE_USE_SYSTEM_CA=1 next start",
+    "postinstall": "node -e \"const fs=require('fs');fs.mkdirSync('public/js',{recursive:true});fs.copyFileSync('node_modules/bootstrap/dist/js/bootstrap.bundle.min.js','public/js/bootstrap.bundle.min.js')\""
   },
   "dependencies": {
     "bootstrap": "^5.3.9",

@@ -14,7 +14,7 @@ export default function RootLayout({ children }) {
     <html lang="es" data-bs-theme="dark">
       <head>
         <Script
-          src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+          src="/js/bootstrap.bundle.min.js"
           strategy="beforeInteractive"
         />
       </head>

@@ -5,6 +5,10 @@ var usuarioModel = require('../../models/usuarios.model');
 
 // diseño de formulario
 router.get('/', function(req, res, next) {
+    if (req.session.id_usuario) {
+        return res.redirect('/admin/novedades');
+    }
+
     res.render('admin/login', {
         layout: 'admin/layout',
     });
@@ -16,6 +20,10 @@ router.get('/logout', function(req, res, next) {
         if (error) {
             return next(error);
         }
+
+        res.locals.sesionIniciada = false;
+        res.locals.nombre = null;
+
         res.render('admin/login', {
             layout: 'admin/layout',
             error: 'Sesión cerrada correctamente'

@@ -1,6 +1,8 @@
 import Link from "next/link";
 
 export default function Navigation() {
+  const backUrl = (process.env.API_BASE_URL ?? "https://back.test").replace(/\/$/, "");
+
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark border-bottom border-secondary">
       <div className="container">
@@ -41,6 +43,11 @@ export default function Navigation() {
               <Link className="nav-link" href="/contacto">
                 Contacto
               </Link>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href={`${backUrl}/admin/login`}>
+                Login
+              </a>
             </li>
           </ul>
         </div>
