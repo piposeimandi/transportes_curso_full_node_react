@@ -34,3 +34,20 @@ npm i express-fileupload
 # Las imágenes subidas se guardan localmente en back/storage/images.
 # Express las sirve mediante la ruta /images.
 
+# para lo de la api se instala otra dependencia llamada cors
+npm i cors
+
+
+
+## ahora el front 
+
+# para crear el proyecto 
+npx create-next-app@latest front
+
+# para levantar 
+npm run dev 
+
+# instalar boostrap 
+
+npm install bootstrap react-bootstrap
+
