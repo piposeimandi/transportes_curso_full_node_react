@@ -2,12 +2,33 @@
 
 import { useState } from "react";
 
-export default function ContactForm() {
-  const [validated, setValidated] = useState(false);
-  const [sent, setSent] = useState(false);
+const initialForm = {
+  nombre: "",
+  email: "",
+  telefono: "",
+  motivo: "",
+  mensaje: "",
+};
 
-  function handleSubmit(event) {
+export default function ContactForm({ postUrl }) {
+  const [validated, setValidated] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [msg, setMsg] = useState("");
+  const [error, setError] = useState(false);
+  const [formData, setFormData] = useState(initialForm);
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((oldData) => ({
+      ...oldData,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
+    setMsg("");
+    setError(false);
 
     const form = event.currentTarget;
     setValidated(true);
@@ -17,10 +38,34 @@ export default function ContactForm() {
       return;
     }
 
-    setSent(true);
-    form.reset();
-    setValidated(false);
-  }
+    setSending(true);
+
+    try {
+      const rawResponse = await fetch(postUrl, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      const response = await rawResponse.json();
+
+      setError(response.error === true);
+      setMsg(response.message);
+
+      if (response.error === false) {
+        setFormData(initialForm);
+        form.reset();
+        setValidated(false);
+      }
+    } catch {
+      setError(true);
+      setMsg("No se pudo enviar el mensaje. Intentá de nuevo.");
+    } finally {
+      setSending(false);
+    }
+  };
 
   return (
     <div className="card h-100 border-0 shadow-sm">
@@ -31,23 +76,27 @@ export default function ContactForm() {
           Completá los datos y te respondemos por email.
         </p>
 
-        {sent && (
+        {msg && (
           <div
-            className="alert alert-success alert-dismissible fade show"
-            role="status"
+            className={`alert ${
+              error ? "alert-danger" : "alert-success"
+            } alert-dismissible fade show`}
+            role="alert"
           >
-            Gracias por tu consulta. Te responderemos a la brevedad.
+            {msg}
             <button
               type="button"
               className="btn-close"
               aria-label="Cerrar"
-              onClick={() => setSent(false)}
+              onClick={() => setMsg("")}
             />
           </div>
         )}
 
         <form
-          className={validated ? "needs-validation was-validated" : "needs-validation"}
+          className={
+            validated ? "needs-validation was-validated" : "needs-validation"
+          }
           noValidate
           onSubmit={handleSubmit}
         >
@@ -59,10 +108,12 @@ export default function ContactForm() {
               <input
                 className="form-control form-control-lg"
                 type="text"
-                name="name"
+                name="nombre"
                 id="contactName"
                 autoComplete="name"
                 placeholder="Ej.: María Gómez"
+                value={formData.nombre}
+                onChange={handleChange}
                 required
               />
               <div className="invalid-feedback">Ingresá tu nombre.</div>
@@ -79,6 +130,8 @@ export default function ContactForm() {
                 id="contactEmail"
                 autoComplete="email"
                 placeholder="nombre@email.com"
+                value={formData.email}
+                onChange={handleChange}
                 required
               />
               <div className="invalid-feedback">Ingresá un email válido.</div>
@@ -91,10 +144,12 @@ export default function ContactForm() {
               <input
                 className="form-control form-control-lg"
                 type="tel"
-                name="phone"
+                name="telefono"
                 id="contactPhone"
                 autoComplete="tel"
                 placeholder="+54 11..."
+                value={formData.telefono}
+                onChange={handleChange}
               />
             </div>
 
@@ -104,10 +159,11 @@ export default function ContactForm() {
               </label>
               <select
                 className="form-select form-select-lg"
-                name="subject"
+                name="motivo"
                 id="contactSubject"
+                value={formData.motivo}
+                onChange={handleChange}
                 required
-                defaultValue=""
               >
                 <option value="" disabled>
                   Seleccioná una opción
@@ -128,10 +184,12 @@ export default function ContactForm() {
               </label>
               <textarea
                 className="form-control"
-                name="message"
+                name="mensaje"
                 id="contactMessage"
                 rows={5}
                 placeholder="Contanos origen, destino y detalles del envío..."
+                value={formData.mensaje}
+                onChange={handleChange}
                 required
                 minLength={10}
               />
@@ -159,8 +217,12 @@ export default function ContactForm() {
             </div>
 
             <div className="col-12 d-grid gap-2 d-md-flex justify-content-md-end">
-              <button type="submit" className="btn btn-primary btn-lg px-4">
-                Enviar consulta
+              <button
+                type="submit"
+                className="btn btn-primary btn-lg px-4"
+                disabled={sending}
+              >
+                {sending ? "Enviando..." : "Enviar consulta"}
               </button>
             </div>
           </div>

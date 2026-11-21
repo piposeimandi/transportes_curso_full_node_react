@@ -84,7 +84,7 @@ export default function ContactoPage() {
       </div>
 
       <div className="col-lg-7">
-        <ContactForm />
+        <ContactForm postUrl={`${process.env.API_BASE_URL}/api/contacto`} />
       </div>
     </div>
   );
