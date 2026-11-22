@@ -1,8 +1,8 @@
 import ContactForm from "./contact-form";
 
 export const metadata = {
-  title: "Contacto | Transportes X",
-  description: "Comunicate con Transportes X.",
+  title: "Contacto | TransSur",
+  description: "Comunicate con TransSur.",
 };
 
 const channels = [
@@ -19,8 +19,8 @@ const channels = [
   },
   {
     label: "Email",
-    value: "contacto@transportesx.com",
-    href: "mailto:contacto@transportesx.com",
+    value: "contacto@transsur.com",
+    href: "mailto:contacto@transsur.com",
     icon: "M1.8 3.5h12.4a.8.8 0 0 1 .8.8v7.4a.8.8 0 0 1-.8.8H1.8a.8.8 0 0 1-.8-.8V4.3a.8.8 0 0 1 .8-.8Zm.95 1.5L8 8.6l5.25-3.6H2.75Z",
   },
   {
