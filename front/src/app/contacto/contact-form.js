@@ -208,7 +208,7 @@ export default function ContactForm({ postUrl }) {
                   required
                 />
                 <label className="form-check-label" htmlFor="contactConsent">
-                  Acepto ser contactado por Transportes X.
+                  Acepto ser contactado por TransSur.
                 </label>
                 <div className="invalid-feedback">
                   Debés aceptar el contacto.

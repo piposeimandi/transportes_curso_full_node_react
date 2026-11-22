@@ -5,8 +5,11 @@ import "./styles/globals.css";
 
 
 export const metadata = {
-  title: "Transportes X",
+  title: "TransSur | Logística y Transporte",
   description: "Envio de paquetes y encomiendas a nivel nacional e internacional",
+  icons: {
+    icon: "/transsur-bootstrap-assets/favicon.svg",
+  },
 };
 
 export default function RootLayout({ children }) {
@@ -27,7 +30,7 @@ export default function RootLayout({ children }) {
 
         <footer className="bg-dark text-white py-3 text-center mt-auto border-top border-secondary">
           <p className="mb-0">
-            &copy; 2024 Transportes X. Todos los derechos reservados.
+            &copy; 2026 TransSur. Todos los derechos reservados.
           </p>
         </footer>
       </body>

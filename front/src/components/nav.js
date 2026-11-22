@@ -7,7 +7,11 @@ export default function Navigation() {
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark border-bottom border-secondary">
       <div className="container">
         <Link className="navbar-brand" href="/">
-          Transportes X
+          <img
+            src="/transsur-bootstrap-assets/img/logo-transsur.svg"
+            alt="TransSur"
+            height="52"
+          />
         </Link>
 
         <button
