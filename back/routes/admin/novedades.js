@@ -57,9 +57,9 @@ async function cleanUpUploadedImage(image) {
     }
 }
 
-// diseño de formulario
+// Listado de novedades (incluye las dadas de baja)
 router.get('/', async function(req, res, next) {
-    var novedades = await novedadesModel.getNovedades();
+    var novedades = await novedadesModel.getAllNovedades();
     res.render('admin/novedades', {
         novedades: novedades,
         layout: 'admin/layout',
@@ -70,14 +70,6 @@ router.get('/', async function(req, res, next) {
 router.get('/agregar', (req, res, next) => {
     res.render('admin/novedadAgregar', {
         layout: 'admin/layout'
-    });
-});
-
-router.get('/', async function(req, res, next) {
-    var novedades = await novedadesModel.getNovedades();
-    res.render('admin/novedades', {
-        novedades: novedades,
-        layout: 'admin/layout',
     });
 });
 
@@ -111,15 +103,59 @@ router.post('/agregar', async (req, res, next) => {
     }
 });
 
-router.get('/eliminar/:id', async (req, res, next) => {
-    var id = req.params.id;
-    await novedadesModel.deleteNovedadById(id);
+// soft delete (como uso en laravel normalmente mediante eloquent
+router.post('/eliminar/:id', async (req, res, next) => {
+    try {
+        await novedadesModel.deleteNovedadById(req.params.id);
+    } catch (error) {
+        console.error(error);
+    }
+    res.redirect('/admin/novedades');
+});
+
+// borra el registro y su imagen del disco
+router.post('/eliminar-definitivo/:id', async (req, res, next) => {
+    try {
+        var novedad = await novedadesModel.getNovedadById(req.params.id);
+        if (!novedad) {
+            res.redirect('/admin/novedades');
+            return;
+        }
+
+        await novedadesModel.deleteNovedadDefinitivaById(req.params.id);
+
+        if (novedad.imagen) {
+            try {
+                await removeNovedadImage(novedad.imagen);
+            } catch (cleanupError) {
+                console.error('Error al eliminar la imagen de la novedad:', cleanupError);
+            }
+        }
+        res.redirect('/admin/novedades');
+    } catch (error) {
+        console.error(error);
+        res.redirect('/admin/novedades');
+    }
+});
+
+// para restaurar  
+router.post('/restaurar/:id', async (req, res, next) => {
+    try {
+        await novedadesModel.restoreNovedadById(req.params.id);
+    } catch (error) {
+        console.error(error);
+    }
     res.redirect('/admin/novedades');
 });
 
 router.get('/modificar/:id', async (req, res, next) => {
     var id = req.params.id;
     var novedad = await novedadesModel.getNovedadById(id);
+    //  novedad dada de baja se restaura antes de poder editarse
+    if (!novedad || novedad.fecha_delete) {
+        res.redirect('/admin/novedades');
+        return;
+    }
     res.render('admin/novedadModificar', {
         layout: 'admin/layout',
         novedad
@@ -131,7 +167,7 @@ router.post('/modificar', async (req, res, next) => {
     var novedad;
     try {
         novedad = await novedadesModel.getNovedadById(req.body.id);
-        if (!novedad) {
+        if (!novedad || novedad.fecha_delete) {
             res.redirect('/admin/novedades');
             return;
         }

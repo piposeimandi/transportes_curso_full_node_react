@@ -14,14 +14,20 @@
           <th>Título</th>
           <th>Imagen</th>
           <th>Fecha de creación</th>
+          <th>Estado</th>
           <th>Acciones</th>
         </tr>
       </thead>
       <tbody>
         {{#each novedades}}
-          <tr>
+          <tr class="{{#if fecha_delete}}table-secondary{{/if}}">
             <td>{{id}}</td>
-            <td>{{titulo}}</td>
+            <td>
+              {{titulo}}
+              {{#if fecha_delete}}
+                <i class="fas fa-trash ms-1 text-secondary" title="Dada de baja el {{fecha_delete}}"></i>
+              {{/if}}
+            </td>
             <td>
               {{#if imagen}}
                 <img src="/images/{{imagen}}" alt="{{nombre_imagen}}" class="img-thumbnail" style="width: 96px; height: 64px; object-fit: cover;">
@@ -31,24 +37,53 @@
             </td>
             <td>{{fecha_insert}}</td>
             <td>
-              <a href="/admin/novedades/modificar/{{id}}" class="btn btn-sm btn-primary">
-                <i class="fas fa-edit"></i>
-              </a>
-              <button
-                type="button"
-                class="btn btn-sm btn-danger"
-                data-bs-toggle="modal"
-                data-bs-target="#modalEliminarNovedad"
-                data-url="/admin/novedades/eliminar/{{id}}"
-                aria-label="Eliminar novedad"
-              >
-                <i class="fas fa-trash"></i>
-              </button>
+              {{#if fecha_delete}}
+                <span class="badge text-bg-secondary">Dada de baja</span>
+              {{else}}
+                <span class="badge text-bg-success">Activa</span>
+              {{/if}}
+            </td>
+            <td>
+              {{#if fecha_delete}}
+                <form method="POST" action="/admin/novedades/restaurar/{{id}}" class="d-inline">
+                  <button type="submit" class="btn btn-sm btn-success" title="Restaurar novedad" aria-label="Restaurar novedad">
+                    <i class="fas fa-undo"></i>
+                  </button>
+                </form>
+                <button
+                  type="button"
+                  class="btn btn-sm btn-outline-danger"
+                  data-bs-toggle="modal"
+                  data-bs-target="#modalEliminarNovedad"
+                  data-url="/admin/novedades/eliminar-definitivo/{{id}}"
+                  data-texto="Esta novedad ya está dada de baja. Si la eliminás definitivamente se borra de la base y no se puede recuperar."
+                  data-accion="Eliminar definitivamente"
+                  aria-label="Eliminar definitivamente la novedad"
+                >
+                  <i class="fas fa-trash-alt"></i>
+                </button>
+              {{else}}
+                <a href="/admin/novedades/modificar/{{id}}" class="btn btn-sm btn-primary" title="Modificar novedad" aria-label="Modificar novedad">
+                  <i class="fas fa-edit"></i>
+                </a>
+                <button
+                  type="button"
+                  class="btn btn-sm btn-danger"
+                  data-bs-toggle="modal"
+                  data-bs-target="#modalEliminarNovedad"
+                  data-url="/admin/novedades/eliminar/{{id}}"
+                  data-texto="La novedad pasa a estar dada de baja: se oculta del sitio público, pero se puede restaurar desde este listado."
+                  data-accion="Dar de baja"
+                  aria-label="Dar de baja la novedad"
+                >
+                  <i class="fas fa-trash"></i>
+                </button>
+              {{/if}}
             </td>
           </tr>
         {{else}}
           <tr>
-            <td colspan="5" class="text-center">No hay novedades para mostrar.</td>
+            <td colspan="6" class="text-center">No hay novedades para mostrar.</td>
           </tr>
         {{/each}}
       </tbody>
@@ -64,11 +99,13 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
       </div>
       <div class="modal-body">
-        ¿Estás seguro de que querés eliminar esta novedad?
+        <p id="textoEliminarNovedad" class="mb-0"></p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <a id="confirmarEliminarNovedad" href="#" class="btn btn-danger">Eliminar</a>
+        <form id="formEliminarNovedad" method="POST" class="d-inline">
+          <button type="submit" class="btn btn-danger" id="confirmarEliminarNovedad">Eliminar</button>
+        </form>
       </div>
     </div>
   </div>
@@ -76,7 +113,9 @@
 
 <script>
   document.getElementById('modalEliminarNovedad').addEventListener('show.bs.modal', function (event) {
-    document.getElementById('confirmarEliminarNovedad').href =
-      event.relatedTarget.getAttribute('data-url');
+    var trigger = event.relatedTarget;
+    document.getElementById('formEliminarNovedad').action = trigger.getAttribute('data-url');
+    document.getElementById('textoEliminarNovedad').textContent = trigger.getAttribute('data-texto');
+    document.getElementById('confirmarEliminarNovedad').textContent = trigger.getAttribute('data-accion');
   });
 </script>

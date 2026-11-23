@@ -11,6 +11,18 @@ async function getNovedades() {
     return rows;
 }
 
+// usado por el  panel de admin ,  incluye también 
+// novedades eliminadas, para que se puedan restaurar o borrar definitivamente
+async function getAllNovedades() {
+    var query = `SELECT id, titulo, subtitulo, cuerpo, imagen, nombre_imagen,
+                    DATE_FORMAT(fecha_insert, '%Y-%m-%d %H:%i') AS fecha_insert,
+                    fecha_update, fecha_delete
+             FROM novedades
+             ORDER BY (fecha_delete IS NULL) DESC, fecha_insert DESC`;
+    var rows = await pool.query(query);
+    return rows;
+}
+
 async function insertNovedad(obj) {
     const query = `
     INSERT INTO novedades (titulo, subtitulo, cuerpo, imagen, nombre_imagen, fecha_insert)
@@ -26,9 +38,23 @@ async function insertNovedad(obj) {
     ]);
 }
 
+// soft delete (como uso en laravel normalmente mediante eloquent 
 async function deleteNovedadById(id) {
-    // En lugar de eliminar el registro, actualizamos la fecha de eliminación
-    var query = "UPDATE novedades SET fecha_delete = NOW() WHERE id = ?";
+    var query = "UPDATE novedades SET fecha_delete = NOW() WHERE id = ? AND fecha_delete IS NULL";
+    var rows = await pool.query(query, [id]);
+    return rows;
+}
+
+// borrar definitivamente
+async function deleteNovedadDefinitivaById(id) {
+    var query = "DELETE FROM novedades WHERE id = ?";
+    var rows = await pool.query(query, [id]);
+    return rows;
+}
+
+// restarurar
+async function restoreNovedadById(id) {
+    var query = "UPDATE novedades SET fecha_delete = NULL WHERE id = ? AND fecha_delete IS NOT NULL";
     var rows = await pool.query(query, [id]);
     return rows;
 }
@@ -50,6 +76,6 @@ async function updateNovedadById(obj, id) {
     }
 }
 
-module.exports = { getNovedades, insertNovedad, deleteNovedadById, getNovedadById, updateNovedadById };
+module.exports = { getNovedades, getAllNovedades, insertNovedad, deleteNovedadById, deleteNovedadDefinitivaById, restoreNovedadById, getNovedadById, updateNovedadById };
 
 
