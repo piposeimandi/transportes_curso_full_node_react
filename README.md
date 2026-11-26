@@ -2,6 +2,14 @@
 
 Trabajo practico de la diplomatura UTNBA Web Full Stack. Es un sitio institucional de una empresa de logistica y transporte (TransSur), con un front publico y un panel de admin para manejar las novedades.
 
+## Video explicativo
+
+Antes de leer el resto, te dejo el video donde explico todo el trabajo (arquitectura, back, front, soft delete y como lo corri en local):
+
+[![Ver video explicativo en YouTube](https://img.youtube.com/vi/j6WckOUrmxo/0.jpg)](https://youtu.be/j6WckOUrmxo)
+
+Link directo: https://youtu.be/j6WckOUrmxo
+
 El repo tiene dos partes que conviven juntas:
 
 - `back/` - api y panel de administracion (Node + Express + Handlebars).
