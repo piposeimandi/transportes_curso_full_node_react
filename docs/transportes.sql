@@ -2,8 +2,8 @@
 -- version 5.2.3
 -- https://www.phpmyadmin.net/
 --
--- Servidor: mysql:3306
--- Tiempo de generación: 20-11-2026 a las 22:19:00
+-- Servidor: lerd-mysql
+-- Tiempo de generación: 26-11-2026 a las 22:20:06
 -- Versión del servidor: 8.4.13
 -- Versión de PHP: 8.3.36
 
@@ -29,12 +29,12 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `empleados` (
   `id_emp` int UNSIGNED NOT NULL,
-  `nombre` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `apellido` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `trabajo` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nombre` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `apellido` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `trabajo` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `edad` tinyint UNSIGNED NOT NULL,
   `salario` decimal(12,2) NOT NULL,
-  `mail` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+  `mail` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -86,7 +86,8 @@ CREATE TABLE `novedades` (
 --
 
 INSERT INTO `novedades` (`id`, `titulo`, `subtitulo`, `cuerpo`, `nombre_imagen`, `imagen`, `fecha_insert`, `fecha_update`, `fecha_delete`) VALUES
-(1, 'Esto es un post ', 'perrro viejo', 'hola hola', NULL, NULL, '2026-11-19 22:02:37', '2026-11-20 22:01:17', NULL);
+(1, 'Sistema de novedades Online', 'Logro ! pudimos crear en el back el CRUD de Novedades   EDITADA', '¡Gran avance en el desarrollo! Logramos implementar exitosamente el CRUD completo para la sección de Novedades en el backend. Con esta funcionalidad lista, el sistema ya cuenta con toda la lógica necesaria para crear, leer, actualizar y eliminar publicaciones de forma eficiente y segura, dejando una base sólida para gestionar todo el contenido de la plataforma.', 'Captura de pantalla_20261121_010215.png', 'ada3d757231735b209372a0d88cced46.png', '2026-11-19 22:02:37', '2026-11-24 00:04:49', NULL),
+(8, 'creat', 'subtitulo', 'cuerpo editado', 'tapa22.jpeg', 'ba0d79177e11b85357fa4a0276e517d4.jpeg', '2026-11-26 21:04:06', '2026-11-26 21:08:26', NULL);
 
 -- --------------------------------------------------------
 
@@ -143,7 +144,7 @@ ALTER TABLE `empleados`
 -- AUTO_INCREMENT de la tabla `novedades`
 --
 ALTER TABLE `novedades`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
